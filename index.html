@@ -1,1 +1,181 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Your Title Here</title>\n    <link rel="stylesheet" href="styles.css">\n</head>\n<body>\n    <h1>Welcome to Sherlly</h1>\n    <p>This is a cleaned-up version of your HTML content.</p>\n    <script src="script.js"></script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Sherlly ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins:wght@300&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin:0;
+  overflow:hidden;
+  font-family:'Poppins', sans-serif;
+  color:white;
+  background:black;
+}
+
+video {
+  position:fixed;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+
+.overlay {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  z-index:-1;
+}
+
+.slide {
+  position:absolute;
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:30px;
+  opacity:0;
+  transition:2s;
+}
+
+.active {
+  opacity:1;
+}
+
+h1 {
+  font-family:'Playfair Display';
+  font-size:30px;
+  line-height:1.5;
+}
+
+p {
+  margin-top:15px;
+  font-size:18px;
+  opacity:0.85;
+}
+
+#countdown {
+  margin-top:20px;
+  font-size:18px;
+}
+
+.particle {
+  position:fixed;
+  top:-10px;
+  border-radius:50%;
+  opacity:0.7;
+  animation:fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform:translateY(110vh); }
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- VIDEO -->
+<video autoplay muted loop>
+  <source src="Bg.mp4" type="video/mp4">
+</video>
+
+<div class="overlay"></div>
+
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="musik.mp3" type="audio/mpeg">
+</audio>
+
+<!-- SLIDE 1 -->
+<div class="slide active">
+  <h1>Untuk kamu<br>🌸 Sherlly Merliana 🌸</h1>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide">
+  <div>
+    <h1>Selamat ulang tahun ke-24 ❤️</h1>
+    <p>Semoga semua impianmu menjadi nyata</p>
+  </div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide">
+  <div>
+    <h1>LDR Indonesia 🇮🇩 — Jepang 🇯🇵</h1>
+    <p>Jarak ini jauh, tapi cintaku selalu dekat</p>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide">
+  <div>
+    <h1>Menuju 2 Mei 💕</h1>
+    <div id="countdown"></div>
+  </div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide">
+  <div>
+    <h1>Kalau jarak ini berat…</h1>
+    <p>aku juga merasakannya setiap hari</p>
+  </div>
+</div>
+
+<!-- ENDING -->
+<div class="slide" id="ending">
+  <div>
+    <h1 id="endingText"></h1>
+    <p id="endingSub" style="opacity:0; transition:2s;">
+      Aku akan selalu memilih kamu ❤️
+    </p>
+
+    <audio id="voice">
+      <source src="voice.mp3" type="audio/mpeg">
+    </audio>
+
+  </div>
+</div>
+
+<script>
+let slides=document.querySelectorAll(".slide");
+let index=0;
+
+/* AUTO SLIDE */
+setInterval(()=>{
+  slides[index].classList.remove("active");
+  index=(index+1)%slides.length;
+  slides[index].classList.add("active");
+},6000);
+
+/* COUNTDOWN */
+let target=new Date("May 2, 2026 00:00:00").getTime();
+
+setInterval(()=>{
+  let now=new Date().getTime();
+  let diff=target-now;
+
+  let d=Math.floor(diff/(1000*60*60*24));
+  let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  let m=Math.floor((diff%(1000*60*60))/(1000*60));
+
+  document.getElementById("countdown").innerHTML =
+  d+" hari "+h+" jam "+m+" menit lagi ❤️";
+},1000);
+
+/* PARTICLES */
+for(let i=0;i<40;i++){\n  let p=document.createElement("div");\n  p.classList.add("particle");\n
+  let size=Math.random()*6+4;\n  p.style.width=size+"px";\n  p.style.height=size+"px";\n  p.style.left=Math.random()*100+"vw";\n  p.style.background=Math.random()>0.5?"pink":"white";\n  p.style.animationDuration=(Math.random()*8+6)+"s";\n
+  document.body.appendChild(p);\n}\n
+/* ENDING */\nlet played=false;\n
+function playEnding(){\n  if(played) return;\n  played=true;\n\n  let text="Maaf aku belum bisa selalu ada di samping kamu...";\n  let el=document.getElementById("endingText");\n\n  let i=0;\n  function typing(){\n    if(i<text.length){\n      el.innerHTML+=text.charAt(i);\n      i++;\n      setTimeout(typing,60);\n    }\n  }\n  typing();\n\n  setTimeout(()=>{\n    document.getElementById("endingSub").style.opacity=1;\n  },4000);\n\n  setTimeout(()=>{\n    document.getElementById("voice").play();\n  },5000);\n}\n\nsetInterval(()=>{\n  if(slides[index].id===\"ending\"){\n    playEnding();\n  }\n},1000);\n</script>\n\n</body>\n</html>

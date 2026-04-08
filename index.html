@@ -1,79 +1,52 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untuk Sherlly ❤️</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins:wght@300&display=swap" rel="stylesheet">
-<style>body {margin:0;overflow:hidden;font-family:'Poppins', sans-serif;color:white;background:black;}video {position:fixed;width:100%;height:100%;object-fit:cover;z-index:-2;}.overlay {position:fixed;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:-1;}.slide {position:absolute;width:100%;height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;padding:30px;opacity:0;transition:2s;}.active {opacity:1;}h1 {font-family:'Playfair Display';font-size:30px;line-height:1.5;}p {margin-top:15px;font-size:18px;opacity:0.85;}#countdown {margin-top:20px;font-size:18px;}.particle {position:fixed;top:-10px;border-radius:50%;opacity:0.7;animation:fall linear infinite;}.gallery-slide {width:100%;height:100vh;background-size:cover;background-position:center;background-repeat:no-repeat;}@keyframes fall {to { transform:translateY(110vh); }}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Autoplay Fix</title>
+    <style>
+        body { margin: 0; }
+        .background-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .container { position: relative; z-index: 1; }
+        .play-button { display: none; }
+    </style>
 </head>
 <body>
-<video autoplay muted loop><source src="Bg.mp4" type="video/mp4"></video>
-<div class="overlay"></div>
-<audio autoplay loop><source src="musik.mp3" type="audio/mpeg"></audio>
-
-<div class="slide active"><h1>Untuk kamu<br>🌸 Sherlly Merliana 🌸</h1></div>
-<div class="slide"><div><h1>Selamat ulang tahun ke-24 ❤️</h1><p>Semoga semua impianmu menjadi nyata</p></div></div>
-<div class="slide"><div><h1>LDR Indonesia 🇮🇩 — Jepang 🇯🇵</h1><p>Jarak ini jauh, tapi cintaku selalu dekat</p></div></div>
-<div class="slide"><div><h1>Menuju 2 Mei 💕</h1><div id="countdown"></div></div></div>
-<div class="slide"><div><h1>Kalau jarak ini berat…</h1><p>aku juga merasakannya setiap hari</p></div></div>
-<div class="slide gallery-slide" style="background-image:url('foto1.JPG');"><div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:10px;"><h1>💕 Kenangan Indah 💕</h1><p>Foto spesial untuk momen kita</p></div></div>
-<div class="slide gallery-slide" style="background-image:url('foto2.JPG');"><div style="background:rgba(0,0,0,0.3); padding:20px; border-radius:10px;"><h1>✨ Senyum Terindah ✨</h1><p>Bahagia bersama kamu</p></div></div>
-<div class="slide" id="ending"><div><h1 id="endingText"></h1><p id="endingSub" style="opacity:0; transition:2s;">Aku akan selalu memilih kamu ❤️</p><audio id="voice"><source src="voice.mp3" type="audio/mpeg"></audio></div></div>
-
-<script>
-let slides=document.querySelectorAll(".slide");
-let index=0;
-setInterval(()=>{
-slides[index].classList.remove("active");
-index=(index+1)%slides.length;
-slides[index].classList.add("active");
-},6000);
-
-let target=new Date("May 2, 2026 00:00:00").getTime();
-setInterval(()=>{
-let now=new Date().getTime();
-let diff=target-now;
-let d=Math.floor(diff/(1000*60*60*24));
-let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-let m=Math.floor((diff%(1000*60*60))/(1000*60));
-document.getElementById("countdown").innerHTML=d+" hari "+h+" jam "+m+" menit lagi ❤️";
-},1000);
-
-for(let i=0;i<40;i++){
-let p=document.createElement("div");
-p.classList.add("particle");
-let size=Math.random()*6+4;
-p.style.width=size+"px";
-p.style.height=size+"px";
-p.style.left=Math.random()*100+"vw";
-p.style.background=Math.random()>0.5?"pink":"white";
-p.style.animationDuration=(Math.random()*8+6)+"s";
-document.body.appendChild(p);
-}
-
-let played=false;
-function playEnding(){
-if(played) return;
-played=true;
-let text="Maaf aku belum bisa selalu ada di samping kamu...";
-let el=document.getElementById("endingText");
-let i=0;
-function typing(){
-if(i<text.length){
-el.innerHTML+=text.charAt(i);
-i++;
-setTimeout(typing,60);
-}
-}
-typing();
-setTimeout(()=>{document.getElementById("endingSub").style.opacity=1;},4000);
-setTimeout(()=>{document.getElementById("voice").play();},5000);
-}
-
-setInterval(()=>{
-if(slides[index].id==="ending"){playEnding();}
-},1000);
-</script>
+    <video class="background-video" autoplay loop muted>
+        <source src="video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="container">
+        <h1>Welcome to Our Presentation</h1>
+        <div>
+            <p>Here is the content of our presentation:</p>
+            <ul>
+                <li>Slide 1: Introduction</li>
+                <li>Slide 2: Overview</li>
+                <li>Slide 3: Features</li>
+                <li>Slide 4: Demonstration</li>
+                <li>Slide 5: Testimonials</li>
+                <li>Slide 6: Summary</li>
+                <li>Slide 7: Call to Action</li>
+                <li>Slide 8: Thank You</li>
+            </ul>
+            <button class="play-button" onclick="playAudio()">Play</button>
+        </div>
+    </div>
+    <audio id="bg-music" src="musik.mp3" preload="auto"></audio>
+    <audio id="voice-over" src="voice.mp3" preload="auto"></audio>
+    <script>
+        function playAudio() {
+            const bgMusic = document.getElementById('bg-music');
+            bgMusic.play();
+        }
+        // Check for mobile device and show play button
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+            document.querySelector('.play-button').style.display = 'block';
+        } else {
+            const bgMusic = document.getElementById('bg-music');
+            bgMusic.play();
+        }
+    </script>
 </body>
 </html>

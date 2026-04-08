@@ -3,50 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audio Autoplay Fix</title>
+    <title>Slide Presentation</title>
     <style>
-        body { margin: 0; }
-        .background-video { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        .container { position: relative; z-index: 1; }
-        .play-button { display: none; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .slide { display: none; }
+        .active { display: block; }
+        #countdown { font-size: 2em; color: red; }
     </style>
 </head>
 <body>
-    <video class="background-video" autoplay loop muted>
-        <source src="video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-    <div class="container">
-        <h1>Welcome to Our Presentation</h1>
-        <div>
-            <p>Here is the content of our presentation:</p>
-            <ul>
-                <li>Slide 1: Introduction</li>
-                <li>Slide 2: Overview</li>
-                <li>Slide 3: Features</li>
-                <li>Slide 4: Demonstration</li>
-                <li>Slide 5: Testimonials</li>
-                <li>Slide 6: Summary</li>
-                <li>Slide 7: Call to Action</li>
-                <li>Slide 8: Thank You</li>
-            </ul>
-            <button class="play-button" onclick="playAudio()">Play</button>
-        </div>
+    <div id="presentation">
+        <div class="slide active"><h1>Slide 1</h1></div>
+        <div class="slide"><h1>Slide 2</h1></div>
+        <div class="slide"><h1>Slide 3</h1></div>
+        <div class="slide"><h1>Slide 4</h1></div>
+        <div class="slide"><h1>Slide 5</h1></div>
+        <div class="slide"><h1>Slide 6</h1></div>
+        <div class="slide"><h1>Slide 7</h1></div>
+        <div class="slide"><h1>Slide 8</h1></div>
+        <button id="playButton">Play</button>
+        <div id="countdown"></div>
     </div>
-    <audio id="bg-music" src="musik.mp3" preload="auto"></audio>
-    <audio id="voice-over" src="voice.mp3" preload="auto"></audio>
+    <audio autoplay id="backgroundMusic">
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
     <script>
-        function playAudio() {
-            const bgMusic = document.getElementById('bg-music');
-            bgMusic.play();
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const playButton = document.getElementById('playButton');
+        const countdownDisplay = document.getElementById('countdown');
+        const totalSlides = slides.length;
+
+        playButton.onclick = function() {
+            showSlide(currentSlide);
+            startCountdown(10); // 10 seconds countdown
+        };
+
+        function showSlide(slideIndex) {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === slideIndex);
+            });
+
+            if (slideIndex < totalSlides - 1) {
+                currentSlide++;
+            } else {
+                currentSlide = 0; // Reset to first slide
+            }
         }
-        // Check for mobile device and show play button
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-            document.querySelector('.play-button').style.display = 'block';
-        } else {
-            const bgMusic = document.getElementById('bg-music');
-            bgMusic.play();
+
+        function startCountdown(seconds) {
+            let timeLeft = seconds;
+            countdownDisplay.innerText = timeLeft;
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                countdownDisplay.innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownDisplay.innerText = 'Time is up!';
+                }
+            }, 1000);
         }
+
+        setInterval(() => { showSlide(currentSlide); }, 5000); // Auto slide every 5 seconds
     </script>
 </body>
 </html>
